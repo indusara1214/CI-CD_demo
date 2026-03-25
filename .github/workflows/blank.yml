@@ -1,19 +1,24 @@
-name: Simple CI Pipeline
+name: CI/CD Pipeline
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "develop" ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Print Message
-        run: echo "Hello, CI/CD Pipeline Running!"
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
 
-      - name: Check Node Version
-        run: node -v
+      - name: Install
+        run: npm install
+
+      - name: Test
+        run: npm test
