@@ -3,29 +3,22 @@ name: CI/CD Pipeline
 on:
   push:
     branches: ["main", "develop"]
-  pull_request:
-    branches: ["main"]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      # ✅ Checkout latest code
       - name: Checkout
         uses: actions/checkout@v4
 
-      # ✅ Setup Node (LTS version)
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
-          cache: 'npm'   # 🔥 built-in caching (better than actions/cache)
+          node-version: 20   # ❌ removed cache
 
-      # ✅ Install dependencies (clean install)
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
-      # ✅ Run tests
       - name: Run tests
         run: npm test
